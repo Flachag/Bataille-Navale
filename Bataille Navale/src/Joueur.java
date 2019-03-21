@@ -11,33 +11,49 @@ public class Joueur {
 		this.grilleTir = gTir;
 	}
 
-	public void demanderBateau(ArrayList<Bateau> b, String nomBateau) throws BateauException {
-		int x,y;
+	public void demanderBateau(Grille g) {
+		int x, y;
 		String ori;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Entrez la position x y et l'orientation (verticale ou horizontale) du "+nomBateau);
-		x = sc.nextInt();
-		y = sc.nextInt();
-		ori = sc.next();
-		b.add(new Bateau(x, y, nomBateau, ori));
+		String[] bateaux = { "porte avion", "croiseur", "contre torpilleur", "sous marin", "torpilleur" };
+
+		for (int i = 0; i < bateaux.length; i++) {
+			System.out.println("Entrez la position x y et l'orientation (verticale ou horizontale) du " + bateaux[i]);
+			x = sc.nextInt();
+			y = sc.nextInt();
+			ori = sc.next();
+			Bateau b;
+			try {
+				b = new Bateau(x, y, bateaux[i], ori);
+				g.placerBateau(b);
+			} catch (BateauException e) {
+				System.out.println("Erreur de placement, replacez le bateau:");
+				i--;
+			}
+		}
 	}
 
-	public void commencer() throws BateauException {
-		ArrayList <Bateau> bateaux = new ArrayList<Bateau>();
-		
-		this.demanderBateau(bateaux, "porte avion");
-		this.demanderBateau(bateaux, "croiseur");
-		this.demanderBateau(bateaux, "contre torpilleur");
-		this.demanderBateau(bateaux, "sous marin");
-		this.demanderBateau(bateaux, "torpilleur");
-		
-		for (int i = 0; i < bateaux.size(); i++) {
-			this.grilleBateau.placerBateau(bateaux.get(i));
-		}
+	public void commencer() {
+		this.demanderBateau(this.grilleBateau);
 		this.grilleBateau.afficher();
 	}
 
 	public void jouer() {
-		
+		int x, y;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Entrez la position x y du tir");
+		x = sc.nextInt();
+		y = sc.nextInt();
+		boolean res = false;
+		while (!res) {
+			try {
+				boolean tir = this.grilleBateau.tirer(x, y);
+				res = true;
+				if (tir)
+					this.jouer();
+			} catch (GrilleException e) {
+				System.out.println("Tir incorrect");
+			}
+		}
 	}
 }

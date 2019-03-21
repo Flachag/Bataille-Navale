@@ -20,13 +20,13 @@ public class Grille {
 	}
 
 	public void placerBateau(Bateau b) throws BateauException {
-		for (Cases pos : b.getPos()) {
-			int x = pos.getX();
-			int y = pos.getY();
+		for (int i = 0; i < b.getPos().size(); i++) {
+			int x = b.getPos().get(i).getX();
+			int y = b.getPos().get(i).getY();
 			if(x >= this.plateau.length || y >= this.plateau[x].length ) 
 				throw new BateauException("Bateau hors de la grille");
 			if (this.plateau[x][y].isLibre()) {
-				this.plateau[x][y] = pos;
+				this.plateau[x][y] = b.getPos().get(i);
 			} else {
 				throw new BateauException("Bateau mal placé");
 			}
@@ -38,7 +38,11 @@ public class Grille {
 		this.plateau[x][y].setLibre(false);
 	}
 
-	public void tirer(int x, int y) throws GrilleException {
+	public boolean tirer(int x, int y) throws GrilleException {
+		boolean touche = false;
+		if(x<0 || x>= this.plateau.length || y<0 || y >= this.plateau[x].length)
+			throw new GrilleException("Tir en dehors de la grille");
+		
 		if (x >= 0 && y >= 0 && this.plateau[x][y].getBateau() != null) {
 			Bateau cible = this.plateau[x][y].getBateau();
 			cible.subirTir(x, y);
@@ -55,14 +59,13 @@ public class Grille {
 				System.out.println("Vie restante: " + cible.getVie() + "%");
 			}
 			this.plateau[x][y].setBateau(null);						
-			
+			touche = true;
 		} else if (x >= 0 && y >= 0) {
 			System.out.println("Plouf");
 			this.plateau[x][y].setLibre(false);
-		} else {
-			throw new GrilleException("Tir en dehors de la grille");
-		}
+		} 
 		this.afficher();
+		return touche;
 	}
 
 	public void afficher() {

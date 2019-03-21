@@ -10,6 +10,6 @@ public class Main {
 		Joueur j1 = new Joueur("J1", g ,j2);
 		
 		j1.commencer();
-		
+		j1.jouer();
 	}
 }
