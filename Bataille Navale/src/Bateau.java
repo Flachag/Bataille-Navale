@@ -3,60 +3,65 @@ import java.util.ArrayList;
 public class Bateau {
 	private ArrayList<Cases> pos;
 	private String nom;
-
-	public Bateau(int x, int y, String nom, String orientation) {
-		pos.add(this.setCase(x, y));
+	private int vie = 100;
+	private int taille;
+	
+	public Bateau(int x, int y, String nom, String orientation) throws BateauException {
+		this.pos = new ArrayList<Cases>();
+		this.pos.add(this.setCase(x, y));
 		
-		int taille = 1;
 		switch (nom) {
 		case "porte avion":
-			taille = 5;
+			this.taille = 5;
 			break;
 		case "croiseur":
-			taille = 4;
+			this.taille = 4;
 			break;
 		case "contre torpilleur":
 		case "sous marin":
-			taille = 3;
+			this.taille = 3;
 			break;
 		case "torpilleur":
-			taille = 2;
+			this.taille = 2;
 			break;
 		default:
-			
-			break;
+			throw new BateauException("Type de bateau innexistant");
 		}
 		this.nom = nom;
 		
 		orientation = orientation.toLowerCase();
 		switch (orientation) {
 		case "gauche":
-			for (int i = 1; i < taille; i++) {
-				x++;
-				pos.add(this.setCase(x, y));
-			}
-			break;
-		case "droite":
-			for (int i = 1; i < taille; i++) {
+			for (int i = 1; i < this.taille; i++) {
 				x--;
 				pos.add(this.setCase(x, y));
 			}
 			break;
+		case "droite":
+			for (int i = 1; i < this.taille; i++) {
+				x++;
+				pos.add(this.setCase(x, y));
+			}
+			break;
 		case "haut":
-			for (int i = 1; i < taille; i++) {
-				y++;
+			for (int i = 1; i < this.taille; i++) {
+				y--;
 				pos.add(this.setCase(x, y));
 			}
 			break;
 		case "bas":
-			for (int i = 1; i < taille; i++) {
-				y--;
+			for (int i = 1; i < this.taille; i++) {
+				y++;
 				pos.add(this.setCase(x, y));
 			}
 			break;
 
 		default:
-			break;
+			throw new BateauException("Mauvaise orientation");
+		}
+		
+		if (x <0 || y <0) {
+			throw new BateauException(this.nom + " mal placé");
 		}
 	}
 
@@ -82,16 +87,27 @@ public class Bateau {
 		return nom;
 	}
 	
+	public int getVie() {
+		return this.vie;
+	}
 
 	public void setNom(String nom) {
 		this.nom = nom;
 	}	
 	
 	public void subirTir(int x, int y) {
-		for (Cases cases : this.pos) {
-			if(cases.getX() == x && cases.getY() == y) {
-				this.pos.remove(cases);
+		for (int i = 0; i < this.pos.size(); i++) {
+			if(pos.get(i).getX() == x && pos.get(i).getY() == y) {
+				this.pos.remove(i);
 			}
 		}
+		this.vie = (int)(((double)this.pos.size()/(double)this.taille)*100);
 	}
+	
+	public boolean isDead() {
+		boolean res = false;
+		if(this.vie == 0)
+			res = true;
+		return res;
+	}		
 }

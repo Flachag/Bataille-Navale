@@ -7,10 +7,11 @@ public class Grille {
 	public Grille(int x, int y) {
 		if (x >= 5 && y >= 5) {
 			this.plateau = new Cases[x][y];
-
+			this.flote = new ArrayList<Bateau>();
+			
 			for (int i = 0; i < this.plateau.length; i++) {
 				for (int j = 0; j < this.plateau.length; j++) {
-					this.plateau[x][y] = new Cases(x, y);
+					this.plateau[i][j] = new Cases(i, j);
 				}
 			}
 		}
@@ -20,32 +21,55 @@ public class Grille {
 		for (Cases pos : b.getPos()) {
 			int x = pos.getX();
 			int y = pos.getY();
-
 			this.plateau[x][y] = pos;
 		}
+		this.flote.add(b);
 	}
 
 	public void placerTerre(int x, int y) {
 		this.plateau[x][y].setLibre(false);
-		;
 	}
 
-	public void tirer(int x, int y){
-		if(x >= 0 && y >= 0 && this.plateau[x][y].getBateau() != null) {
+	public void tirer(int x, int y) throws GrilleException {
+		if (x >= 0 && y >= 0 && this.plateau[x][y].getBateau() != null) {
 			Bateau cible = this.plateau[x][y].getBateau();
-			System.out.println(cible.getNom()+" Touché");
-			
-			
-			if (cible.getPos().size()==1) {
-				System.out.println(cible.getNom()+" Coulé");
-			}
-			
-			for (Bateau bateau : flote) {
-				if (bateau.getNom()==cible.getNom()) {
-					this.flote.remove(bateau);
+			cible.subirTir(x, y);
+
+			if (cible.isDead()) {
+				System.out.println(cible.getNom() + " coulé");
+				for (int i = 0; i < this.flote.size(); i++) {
+					if (flote.get(i).getNom() == cible.getNom()) {
+						this.flote.remove(i);
+					}else {
+					}
 				}
+			} else {
+				System.out.println(cible.getNom() + " touché");
+				this.plateau[x][y].setBateau(null);						
+				System.out.println("Vie restante: " + cible.getVie() + "%");
 			}
-			this.plateau[x][y].setBateau(null);
+			
+		} else if (x >= 0 && y >= 0) {
+			System.out.println("Plouf");
+			this.plateau[x][y].setLibre(false);
+		} else {
+			throw new GrilleException("Tir en dehors de la grille");
+		}
+	}
+
+	public void afficher() {
+		for (int i=0; i < this.plateau.length; i++) {
+			System.out.print("|");
+			for(int j=0; j<this.plateau[i].length; j++) {
+				if (this.plateau[j][i].getBateau() != null)
+					System.out.print("B");
+				else if (!this.plateau[j][i].isLibre())
+					System.out.print("X");
+				else
+					System.out.print("O");
+				System.out.print("|");
+			}
+			System.out.println("");
 		}
 	}
 
@@ -62,11 +86,4 @@ public class Grille {
 	public ArrayList<Bateau> getFlote() {
 		return flote;
 	}
-
-	public void setFlote(ArrayList<Bateau> flote) {
-		this.flote = flote;
-	}
-
-
-
 }
