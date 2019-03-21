@@ -31,31 +31,18 @@ public class Bateau {
 		
 		orientation = orientation.toLowerCase();
 		switch (orientation) {
-		case "gauche":
-			for (int i = 1; i < this.taille; i++) {
-				x--;
-				pos.add(this.setCase(x, y));
-			}
-			break;
-		case "droite":
-			for (int i = 1; i < this.taille; i++) {
-				x++;
-				pos.add(this.setCase(x, y));
-			}
-			break;
-		case "haut":
-			for (int i = 1; i < this.taille; i++) {
-				y--;
-				pos.add(this.setCase(x, y));
-			}
-			break;
-		case "bas":
+		case "verticale":
 			for (int i = 1; i < this.taille; i++) {
 				y++;
 				pos.add(this.setCase(x, y));
 			}
 			break;
-
+		case "horizontale":
+			for (int i = 1; i < this.taille; i++) {
+				x++;
+				pos.add(this.setCase(x, y));
+			}
+			break;
 		default:
 			throw new BateauException("Mauvaise orientation");
 		}
@@ -77,12 +64,10 @@ public class Bateau {
 		return pos;
 	}
 	
-
 	public void setPos(ArrayList<Cases> pos) {
 		this.pos = pos;
 	}
 	
-
 	public String getNom() {
 		return nom;
 	}

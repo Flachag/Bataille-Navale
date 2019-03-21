@@ -8,13 +8,13 @@ public class TestBateau {
 	Bateau b;
 	
 	@Before
-	public void avant() throws BateauException {
+	public void avant() throws BateauException, GrilleException {
 		g = new Grille(10,10);
-		b = new Bateau(0,0,"porte avion", "bas");
+		b = new Bateau(0,0,"porte avion", "verticale");
 	}
 	
 	@Test
-	public void testPlacerBateau() {
+	public void testPlacerBateau() throws BateauException {
 		g.placerBateau(b);
 		boolean res = g.getPlateau()[0][0].getBateau() == b;
 		assertEquals("Bateau mal placé",true , res);
@@ -29,7 +29,7 @@ public class TestBateau {
 	}
 	
 	@Test
-	public void testTirer() throws GrilleException {
+	public void testTirer() throws GrilleException, BateauException {
 		g.placerBateau(b);
 		g.tirer(0,1);
 		boolean res = g.getPlateau()[0][1].getBateau() == b;

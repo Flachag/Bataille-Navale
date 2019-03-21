@@ -4,7 +4,7 @@ public class Grille {
 	private Cases[][] plateau;
 	private ArrayList<Bateau> flote;
 
-	public Grille(int x, int y) {
+	public Grille(int x, int y) throws GrilleException {
 		if (x >= 5 && y >= 5) {
 			this.plateau = new Cases[x][y];
 			this.flote = new ArrayList<Bateau>();
@@ -14,14 +14,22 @@ public class Grille {
 					this.plateau[i][j] = new Cases(i, j);
 				}
 			}
+		}else {
+			throw new GrilleException("taille grille incorrecte");
 		}
 	}
 
-	public void placerBateau(Bateau b) {
+	public void placerBateau(Bateau b) throws BateauException {
 		for (Cases pos : b.getPos()) {
 			int x = pos.getX();
 			int y = pos.getY();
-			this.plateau[x][y] = pos;
+			if(x >= this.plateau.length || y >= this.plateau[x].length ) 
+				throw new BateauException("Bateau hors de la grille");
+			if (this.plateau[x][y].isLibre()) {
+				this.plateau[x][y] = pos;
+			} else {
+				throw new BateauException("Bateau mal placé");
+			}
 		}
 		this.flote.add(b);
 	}
@@ -40,14 +48,13 @@ public class Grille {
 				for (int i = 0; i < this.flote.size(); i++) {
 					if (flote.get(i).getNom() == cible.getNom()) {
 						this.flote.remove(i);
-					}else {
 					}
 				}
 			} else {
 				System.out.println(cible.getNom() + " touché");
-				this.plateau[x][y].setBateau(null);						
 				System.out.println("Vie restante: " + cible.getVie() + "%");
 			}
+			this.plateau[x][y].setBateau(null);						
 			
 		} else if (x >= 0 && y >= 0) {
 			System.out.println("Plouf");
@@ -55,6 +62,7 @@ public class Grille {
 		} else {
 			throw new GrilleException("Tir en dehors de la grille");
 		}
+		this.afficher();
 	}
 
 	public void afficher() {
@@ -73,7 +81,12 @@ public class Grille {
 		}
 	}
 
-	
+	public boolean floteDetruite() {
+		boolean res = false;
+		if (this.flote.size() == 0)
+			res = true;
+		return res;
+	}
 	
 	public Cases[][] getPlateau() {
 		return plateau;

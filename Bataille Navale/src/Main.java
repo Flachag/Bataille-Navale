@@ -1,23 +1,15 @@
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws GrilleException, BateauException {
 		Grille g;
-		Bateau b;
+		Grille j2;
+
 		g = new Grille(10, 10);
-		try {
-			b = new Bateau(0, 0, "porte avion", "bas");
-			g.placerBateau(b);
-		} catch (BateauException t) {
-			System.out.println("Bateau mal placé");
-		}
-		try {
-			g.afficher();
-			g.tirer(0, 0);
-			g.tirer(0, 1);
-			g.tirer(3, 1);
-			g.afficher();
-		} catch (GrilleException e) {
-		}
+		j2 = new Grille(10, 10);
+		Joueur j1 = new Joueur("J1", g ,j2);
+		
+		j1.commencer();
+		
 	}
 }
