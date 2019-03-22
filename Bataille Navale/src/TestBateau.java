@@ -14,42 +14,24 @@ public class TestBateau {
 	}
 
 	@Test
-	public void testPlacerBateau1() throws BateauException {
-		g.placerBateau(b);
-		boolean res = g.getPlateau()[0][0].getBateau() == b;
-		assertEquals("Bateau mal placé", true, res);
-		res = g.getPlateau()[0][1].getBateau() == b;
-		assertEquals("Bateau mal placé", true, res);
-		res = g.getPlateau()[0][2].getBateau() == b;
-		assertEquals("Bateau mal placé", true, res);
-		res = g.getPlateau()[0][3].getBateau() == b;
-		assertEquals("Bateau mal placé", true, res);
-		res = g.getPlateau()[0][4].getBateau() == b;
-		assertEquals("Bateau mal placé", true, res);
-	}
-
-	@Test
-	public void placerBateau2() throws BateauException {
-		g.placerBateau(b);
-		boolean res = g.getPlateau()[0][0].isLibre();
-		assertEquals("Bateau mal placé", false, res);
-		res = g.getPlateau()[0][1].isLibre();
-		assertEquals("Bateau mal placé", false, res);
-		res = g.getPlateau()[0][2].isLibre();
-		assertEquals("Bateau mal placé", false, res);
-		res = g.getPlateau()[0][3].isLibre();
-		assertEquals("Bateau mal placé", false, res);
-		res = g.getPlateau()[0][4].isLibre();
-		assertEquals("Bateau mal placé", false, res);
-	}
-
-	@Test
 	public void testTirer() throws GrilleException, BateauException {
 		g.placerBateau(b);
 		g.tirer(0, 1);
 		boolean res = g.getPlateau()[0][1].getBateau() == b;
 		assertEquals("Echec du tir", false, res);
 		assertEquals("La vie n'a pas baissé", 80, b.getVie());
+	}
+	
+	@Test
+	public void testIsDead() throws BateauException, GrilleException {
+		g.placerBateau(b);
+		g.tirer(0, 0);
+		g.tirer(0, 1);
+		g.tirer(0, 2);
+		g.tirer(0, 3);
+		g.tirer(0, 4);
+		
+		assertEquals("Le bateau est censé être détruit", true, b.isDead());
 	}
 
 }
