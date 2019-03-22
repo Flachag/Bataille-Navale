@@ -52,7 +52,6 @@ public class Bateau {
 		}
 	}
 
-
 	private Cases setCase(int x, int y) {
 		Cases caseBateau = new Cases(x,y);
 		caseBateau.setBateau(this);

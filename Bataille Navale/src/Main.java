@@ -10,6 +10,11 @@ public class Main {
 		Joueur j1 = new Joueur("J1", g ,j2);
 		
 		j1.commencer();
-		j1.jouer();
+		System.out.println("");
+		j1.getGrilleTir().afficher();
+		while(!j1.getGrilleBateau().floteDetruite()) {
+			j1.jouer();
+		}
+		
 	}
 }
