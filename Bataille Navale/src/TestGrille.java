@@ -47,6 +47,7 @@ public class TestGrille {
 		assertEquals("Bateau mal placé", true, res);
 	}
 
+	@Test
 	public void testPlacerTerre() {
 		boolean res = g.getPlateau()[0][0].isLibre();
 		assertEquals("Case libre normalement", true, res);
@@ -55,6 +56,7 @@ public class TestGrille {
 		assertEquals("Case occupée normalement", false, res);
 	}
 	
+	@Test
 	public void testTir() throws BateauException, GrilleException {
 		g.placerBateau(b1);
 		boolean res = g.tirer(1, 1);
@@ -93,6 +95,7 @@ public class TestGrille {
 		assertEquals("Tir  impossible", true, res);
 	}
 
+	@Test
 	public void testFloteDetruite() throws BateauException, GrilleException {
 		g.placerBateau(b1);
 		g.tirer(0, 0);

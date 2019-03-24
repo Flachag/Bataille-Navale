@@ -34,34 +34,6 @@ public class Joueur {
 			}
 		}
 	}
-
-	public void commencer() {
-		this.demanderBateau(this.grilleBateau);
-	}
-
-	public void jouer() {
-		System.out.println("");
-		int x, y;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("");
-		System.out.println("Entrez la position x y du tir");
-		x = sc.nextInt();
-		y = sc.nextInt();
-		boolean res = false;
-		while (!res) {
-			try {
-				boolean tir = this.grilleBateau.tirer(x, y);
-				this.grilleTir.getPlateau()[x][y].setLibre(false);
-				this.grilleTir.afficher();
-				res = true;
-				if (tir)
-					this.jouer();
-				
-			} catch (GrilleException e) {
-				System.out.println("Tir incorrect");
-			}
-		}
-	}
 	
 	public Grille getGrilleBateau() {
 		return grilleBateau;
@@ -71,6 +43,9 @@ public class Joueur {
 		return grilleTir;
 	}
 	
+	public String getNom() {
+		return this.nom;
+	}
 	public void setGrilleBateau(Grille g) {
 		this.grilleBateau = g;
 	}
@@ -78,4 +53,8 @@ public class Joueur {
 	public void setGrilleTir(Grille g) {
 		this.grilleTir = g;
 	}
+	
+	public void setNom(String nom) {
+		this.nom = nom;
+	}	
 }

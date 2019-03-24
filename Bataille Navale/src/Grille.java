@@ -57,7 +57,7 @@ public class Grille {
 		if (x >= 0 && y >= 0 && this.plateau[x][y].getBateau() != null) {
 			Bateau cible = this.plateau[x][y].getBateau();
 			cible.subirTir(x, y);
-
+			System.out.println("");
 			if (cible.isDead()) {
 				System.out.println(cible.getNom() + " coulé");
 				for (int i = 0; i < this.flote.size(); i++) {
@@ -71,15 +71,21 @@ public class Grille {
 			}
 			this.plateau[x][y].setBateau(null);
 			touche = true;
-		} else if (x >= 0 && y >= 0) {
+		} else if (x >= 0 && y >= 0 && this.plateau[x][y].isLibre()) {
 			System.out.println("Plouf");
 			this.plateau[x][y].setLibre(false);
+		} else {
+			throw new GrilleException("Case non libre");
 		}
 		return touche;
 	}
 
 	public void afficher() {
-		System.out.println(" |0|1|2|3|4|5|6|7|8|9|");
+		System.out.print(" |");
+		for (int i = 0; i < plateau.length; i++) {
+			System.out.print(i+"|");
+		}
+		System.out.println("");
 		for (int i = 0; i < this.plateau.length; i++) {
 			System.out.print(i + "|");
 			for (int j = 0; j < this.plateau[i].length; j++) {
