@@ -14,24 +14,23 @@ public class Solo extends Partie {
 	@Override
 	public void jouer() {
 		System.out.println("");
-		int x, y;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("");
+		this.j1.getGrilleTir().afficher();
 		System.out.println("Entrez la position x y du tir");
-		x = sc.nextInt();
-		y = sc.nextInt();
+		System.out.println("");
+		Scanner sc = new Scanner(System.in);
+		int x = sc.nextInt();
+		int y = sc.nextInt();
 		boolean res = false;
-		while (!res) {
+		while (true) {
 			try {
 				boolean tir = this.j1.getGrilleBateau().tirer(x, y);
 				this.j1.getGrilleTir().getPlateau()[x][y].setLibre(false);
-				this.j1.getGrilleTir().afficher();
-				res = true;
-				if (tir)
-					this.jouer();
+				if (tir) {
+					break;
+				}
 
 			} catch (GrilleException e) {
-				System.out.println("Tir incorrect");
+				System.out.println("Tir incorrect, recommencez");
 				this.jouer();
 			}
 		}

@@ -6,13 +6,14 @@ import org.junit.Test;
 public class TestGrille {
 
 	Grille g;
-	Bateau b1, b2;
+	Bateau b1, b2, b3;
 
 	@Before
 	public void avant() throws BateauException, GrilleException {
 		g = new Grille(10, 10);
 		b1 = new Bateau(0, 0, "porte avion", "verticale");
 		b2 = new Bateau(7, 0, "porte avion", "horizontale");
+		b3 = new Bateau(1, 0, "torpilleur", "verticale");
 	}
 
 	public void testIsPlacable() throws BateauException {
@@ -57,7 +58,7 @@ public class TestGrille {
 	}
 	
 	@Test
-	public void testTir() throws BateauException, GrilleException {
+	public void testTirNormal() throws BateauException, GrilleException {
 		g.placerBateau(b1);
 		boolean res = g.tirer(1, 1);
 		assertEquals("Ne devrait pas toucher", false, res);
@@ -69,8 +70,11 @@ public class TestGrille {
 		assertEquals("Case occupée normalement", false, res);
 		res = g.getPlateau()[0][0].getBateau() == null;
 		assertEquals("Case bateau censée être détruite", true, res);
-		
-		res = false;
+	}
+	
+	@Test
+	public void testTirHorsPlateau() {
+		boolean res = false;
 		try {
 			g.tirer(10, 10);
 		}catch (GrilleException e) {
@@ -78,7 +82,7 @@ public class TestGrille {
 		}
 		assertEquals("Tir en dehors de la carte", true, res);
 		
-		res = false;
+
 		try {
 			g.tirer(-1, -2);
 		}catch (GrilleException e) {
@@ -86,9 +90,14 @@ public class TestGrille {
 		}
 		assertEquals("Tir en dehors de la carte", true, res);
 		
-		res = false;
+	}
+	
+	@Test
+	public void testTirCaseOccupee() {
+		boolean res = false;
 		try {
-			g.tirer(0, 0);
+			g.getPlateau()[1][1].setLibre(false);
+			g.tirer(1, 1);
 		}catch (GrilleException e) {
 			res = true;
 		}
@@ -98,14 +107,14 @@ public class TestGrille {
 	@Test
 	public void testFloteDetruite() throws BateauException, GrilleException {
 		g.placerBateau(b1);
+		g.placerBateau(b3);
 		g.tirer(0, 0);
 		g.tirer(0, 1);
 		g.tirer(0, 2);
 		g.tirer(0, 3);
 		g.tirer(0, 4);
-		
+		g.tirer(1, 0);
+		g.tirer(1, 1);
 		assertEquals("Flote devrait etre detruite",true,g.floteDetruite());
-		g.placerBateau(b1);
-		assertEquals("Flote ne devrait pas etre detruite",false,g.floteDetruite());
 	}
 }
