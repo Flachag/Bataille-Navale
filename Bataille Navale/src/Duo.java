@@ -4,6 +4,12 @@ public class Duo extends Partie {
 
 	protected Joueur j2;
 
+	/**
+	 * Constructeur de duo (partie 2 joueurs)
+	 * @param j1 Joueur 1
+	 * @param j2 Joueur 2
+	 * @throws GrilleException Exceptions liees a la class Grille 
+	 */
 	public Duo(Joueur j1, Joueur j2) throws GrilleException {
 		super(j1);
 		this.j2 = j2;
@@ -19,11 +25,17 @@ public class Duo extends Partie {
 	}
 
 	@Override
-	public void jouer() {		
+	public void jouer() {
 		tirer(this.j1, this.j2);
+		this.sauve("test.txt");
 		tirer(this.j2, this.j1);
 	}
 
+	/*
+	 * methode interne qui fait tirer un joueur sur un autre
+	 * @param tireur joueur qui tir
+	 * @param cible joueur cible
+	 */
 	private static void tirer(Joueur tireur, Joueur cible) {
 		System.out.println("");
 		tireur.getGrilleTir().afficher();
@@ -33,6 +45,7 @@ public class Duo extends Partie {
 		int x = sc.nextInt();
 		int y = sc.nextInt();
 		boolean res = false;
+		//permet de recommencer le tir tant que celui ci n'est pas valide (Hors de la map ou tir sur case indisponible)
 		try {
 			while (!res) {
 				boolean tir = cible.getGrilleBateau().tirer(x, y);

@@ -4,6 +4,11 @@ public class Cases {
 	private Bateau b;
 	private boolean libre = true;
 	
+	/*
+	 * Constructeur de Cases
+	 * @param x coordonnee en X de la case
+	 * @param y coordonnee en Y de la case
+	 */
 	public Cases(int x, int y) {
 		if (x >= 0 && y >= 0) {
 			this.x = x;
