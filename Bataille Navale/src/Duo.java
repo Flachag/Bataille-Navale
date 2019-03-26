@@ -32,12 +32,15 @@ public class Duo extends Partie {
 		Scanner sc = new Scanner(System.in);
 		int x = sc.nextInt();
 		int y = sc.nextInt();
+		boolean res = false;
 		try {
-			while (true) {
+			while (!res) {
 				boolean tir = cible.getGrilleBateau().tirer(x, y);
 				tireur.getGrilleTir().getPlateau()[x][y].setLibre(false);
-				if (tir)
-					break;
+				res = true;
+				if (tir && !cible.getGrilleBateau().floteDetruite() && !tireur.getGrilleBateau().floteDetruite())
+					tirer(tireur, cible);
+				break;
 			}
 		} catch (GrilleException e) {
 			System.out.println("Tir incorrect, recommencez");

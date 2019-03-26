@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Grille {
 	private Cases[][] plateau;
@@ -107,7 +108,7 @@ public class Grille {
 			res = true;
 		return res;
 	}
-
+	
 	public Cases[][] getPlateau() {
 		return plateau;
 	}
