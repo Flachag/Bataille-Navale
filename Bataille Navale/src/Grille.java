@@ -125,7 +125,7 @@ public class Grille {
 	 * Affiche la grille dans la console (but purement visuel)
 	 * affiche B sur les cases ou il y a un bateau
 	 * affiche X sur les cases ou il y a eu un tir
-	 * affiche O sinon
+	 * affiche  sinon
 	 */
 	public void afficher() {
 		System.out.print(" |");
@@ -141,7 +141,7 @@ public class Grille {
 				else if (!this.plateau[j][i].isLibre())
 					System.out.print("X");
 				else
-					System.out.print("O");
+					System.out.print("~");
 				System.out.print("|");
 			}
 			System.out.println("");

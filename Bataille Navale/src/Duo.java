@@ -27,8 +27,8 @@ public class Duo extends Partie {
 	@Override
 	public void jouer() {
 		tirer(this.j1, this.j2);
-		this.sauve("test.txt");
-		tirer(this.j2, this.j1);
+		if (!this.j1.getGrilleBateau().floteDetruite() && !this.j2.getGrilleBateau().floteDetruite())
+			tirer(this.j2, this.j1);
 	}
 
 	/*
@@ -60,7 +60,7 @@ public class Duo extends Partie {
 			tirer(tireur, cible);
 		}
 	}
-
+	
 	public Joueur getJ2() {
 		return this.j2;
 	}
