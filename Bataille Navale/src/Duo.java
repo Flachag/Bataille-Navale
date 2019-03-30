@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Duo extends Partie {
+public class Duo extends Partie implements Serializable{
 
 	protected Joueur j2;
 

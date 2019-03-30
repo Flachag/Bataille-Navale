@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Cases {
+public class Cases implements Serializable{
 	private int x, y;
 	private Bateau b;
 	private boolean libre = true;

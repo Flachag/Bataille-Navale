@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Bateau {
+public class Bateau implements Serializable{
 	private ArrayList<Cases> pos;
 	private String nom;
 	private int vie = 100;
@@ -58,9 +59,8 @@ public class Bateau {
 			throw new BateauException("Mauvaise orientation");
 		}
 
-		if (x < 0 || y < 0) {
+		if (x < 0 || y < 0) 
 			throw new BateauException(this.nom + " mal placé");
-		}
 	}
 
 	/**

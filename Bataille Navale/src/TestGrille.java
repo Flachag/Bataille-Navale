@@ -5,12 +5,14 @@ import org.junit.Test;
 
 public class TestGrille {
 
-	Grille g;
+	Grille g, g2, g3;
 	Bateau b1, b2, b3, b4;
 
 	@Before
 	public void avant() throws BateauException, GrilleException {
 		g = new Grille(10, 10);
+		g2= new Grille(6,10);
+		g3 = new Grille(10, 6);
 		b1 = new Bateau(0, 0, "porte avion", "verticale");
 		b2 = new Bateau(7, 0, "porte avion", "horizontale");
 		b3 = new Bateau(1, 0, "torpilleur", "verticale");
@@ -147,5 +149,12 @@ public class TestGrille {
 		g.trierNom();
 		res = g.getFlote().get(0).getNom() + " " + g.getFlote().get(1).getNom() + " " + g.getFlote().get(2).getNom();
 		assertEquals("Mauvais Tri", "croiseur porte avion torpilleur", res);
+	}
+
+	public void testAfficher() {
+		g.afficher();
+		g2.afficher();
+		g3.afficher();
+		assertEquals("Mauvais Tri",true, true);
 	}
 }

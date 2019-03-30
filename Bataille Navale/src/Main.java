@@ -12,7 +12,7 @@ public class Main {
 		Grille bateauJ2, tirJ2;
 		int tailleX = 0, tailleY = 0;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("1-- Jouer \n2-- Charger");
+		System.out.println("1-- Jouer \n2-- Charger une partie");
 		int choix = sc.nextInt();
 		switch (choix) {
 		case 2:
@@ -78,7 +78,6 @@ public class Main {
 				System.out.println("Taille grille incorrecte");
 				e.printStackTrace();
 			}
-
 			break;
 		default:
 			break;

@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Joueur {
+public class Joueur implements Serializable{
 	private String nom;
 	private Grille grilleBateau, grilleTir;
 

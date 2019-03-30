@@ -1,10 +1,12 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Grille {
+public class Grille implements Serializable{
 	private Cases[][] plateau;
 	private ArrayList<Bateau> flote;
+	private int tailleX, tailleY;
 
 	/**
 	 * Constructeur de grille
@@ -16,9 +18,10 @@ public class Grille {
 		if (x >= 5 && y >= 5) {
 			this.plateau = new Cases[x][y];
 			this.flote = new ArrayList<Bateau>();
-
+			this.tailleX = x;
+			this.tailleY = y;
 			for (int i = 0; i < this.plateau.length; i++) {
-				for (int j = 0; j < this.plateau.length; j++) {
+				for (int j = 0; j < this.plateau[i].length; j++) {
 					this.plateau[i][j] = new Cases(i, j);
 				}
 			}
@@ -129,13 +132,13 @@ public class Grille {
 	 */
 	public void afficher() {
 		System.out.print(" |");
-		for (int i = 0; i < plateau.length; i++) {
+		for (int i = 0; i < this.tailleX; i++) {
 			System.out.print(i+"|");
 		}
 		System.out.println("");
-		for (int i = 0; i < this.plateau.length; i++) {
+		for (int i = 0; i < this.tailleY; i++) {
 			System.out.print(i + "|");
-			for (int j = 0; j < this.plateau[i].length; j++) {
+			for (int j = 0; j < this.tailleX; j++) {
 				if (this.plateau[j][i].getBateau() != null)
 					System.out.print("B");
 				else if (!this.plateau[j][i].isLibre())
@@ -171,7 +174,7 @@ public class Grille {
 				return result;
 			}
 		});
-		System.out.println("\nBateaux triés du plus endommagé au moins endommagé");
+		System.out.println("\nBateaux triés du plus endommagé au moins endommagé:");
 		for (int i = 0; i < this.getFlote().size(); i++)
 			System.out.println(this.getFlote().get(i).getNom());
 	}
@@ -188,7 +191,7 @@ public class Grille {
 				return result;
 			}
 		});
-		System.out.println("\nBateaux triés par nom");
+		System.out.println("\nBateaux triés par nom:");
 		for (int i = 0; i < this.getFlote().size(); i++)
 			System.out.println(this.getFlote().get(i).getNom());
 	}
