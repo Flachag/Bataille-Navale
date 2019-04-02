@@ -1,15 +1,16 @@
 import java.io.Serializable;
 import java.util.Scanner;
 
-public class Duo extends Partie implements Serializable{
+public class Duo extends Partie implements Serializable {
 
 	protected Joueur j2;
 
 	/**
 	 * Constructeur de duo (partie 2 joueurs)
+	 * 
 	 * @param j1 Joueur 1
 	 * @param j2 Joueur 2
-	 * @throws GrilleException Exceptions liees a la class Grille 
+	 * @throws GrilleException Exceptions liees a la class Grille
 	 */
 	public Duo(Joueur j1, Joueur j2) throws GrilleException {
 		super(j1);
@@ -34,19 +35,31 @@ public class Duo extends Partie implements Serializable{
 
 	/*
 	 * methode interne qui fait tirer un joueur sur un autre
+	 * 
 	 * @param tireur joueur qui tir
+	 * 
 	 * @param cible joueur cible
 	 */
 	private static void tirer(Joueur tireur, Joueur cible) {
-		System.out.println("");
-		tireur.getGrilleTir().afficher();
-		System.out.println(tireur.getNom() + " entrez la position x y du tir");
-		System.out.println("");
-		Scanner sc = new Scanner(System.in);
-		int x = sc.nextInt();
-		int y = sc.nextInt();
+		int x = 0, y = 0;
+		boolean erreur = true;
+		while (erreur) {
+			try {
+				System.out.println("");
+				tireur.getGrilleTir().afficher();
+				System.out.println(tireur.getNom() + " entrez la position x y du tir");
+				System.out.println("");
+				Scanner sc = new Scanner(System.in);
+				x = Integer.parseInt(sc.next());
+				y = Integer.parseInt(sc.next());
+				erreur = false;
+			} catch (Exception e) {
+				System.out.println("Entrez un nombre !");
+			}
+		}
 		boolean res = false;
-		//permet de recommencer le tir tant que celui ci n'est pas valide (Hors de la map ou tir sur case indisponible)
+		// permet de recommencer le tir tant que celui ci n'est pas valide (Hors de la
+		// map ou tir sur case indisponible)
 		try {
 			while (!res) {
 				boolean tir = cible.getGrilleBateau().tirer(x, y);
@@ -61,7 +74,7 @@ public class Duo extends Partie implements Serializable{
 			tirer(tireur, cible);
 		}
 	}
-	
+
 	public Joueur getJ2() {
 		return this.j2;
 	}

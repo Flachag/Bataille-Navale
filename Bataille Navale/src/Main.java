@@ -3,6 +3,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -10,24 +11,36 @@ public class Main {
 	public static void main(String[] args) {
 		Grille bateauJ1, tirJ1;
 		Grille bateauJ2, tirJ2;
-		int tailleX = 0, tailleY = 0;
+		int tailleX = 0, tailleY = 0, choix = 0;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("1-- Jouer \n2-- Charger une partie");
-		int choix = sc.nextInt();
+
+		while (choix != 1 && choix != 2 && choix != 3) {
+			System.out.println("1-- Jouer \n2-- Charger une partie\n3-- Quitter");
+			try {
+				choix = Integer.parseInt(sc.next());
+			} catch (Exception e) {
+				System.out.println("Entrez un chiffre !");
+			}
+		}
+
 		switch (choix) {
 		case 2:
 			try {
 				charge("batailleNavale.jeu");
-			}catch(Exception e) {
+			} catch (Exception e) {
 				System.out.println("Aucune partie trouvée, début d'une nouvelle partie");
 			}
 		case 1:
 			while (tailleX < 5 || tailleY < 5 || tailleX > 10 || tailleY > 10) {
 				System.out.println("Entrez la largeur et la hauteur de la grille (comprise entre 5 et 10):");
-				tailleX = sc.nextInt();
-				tailleY = sc.nextInt();
-				if (tailleX < 5 || tailleY < 5 || tailleX > 10 || tailleY > 10)
-					System.out.println("Taille incorrecte, recommencez");
+				try {
+					tailleX = Integer.parseInt(sc.next());
+					tailleY = Integer.parseInt(sc.next());
+					if (tailleX < 5 || tailleY < 5 || tailleX > 10 || tailleY > 10)
+						System.out.println("Taille incorrecte, recommencez");
+				} catch (Exception e) {
+					System.out.println("Entrez un chiffre !");
+				}
 			}
 
 			try {
@@ -36,7 +49,12 @@ public class Main {
 				boolean joueur = false;
 				while (!joueur) {
 					System.out.println("Entrez le nombre de joueurs (1 ou 2):");
-					int nb = sc.nextInt();
+					int nb = 0;
+					try {
+						nb = Integer.parseInt(sc.next());
+					} catch (Exception e) {
+						System.out.println("Entrez un chiffre");
+					}
 					switch (nb) {
 					case 1:
 						joueur = true;
@@ -78,6 +96,10 @@ public class Main {
 				System.out.println("Taille grille incorrecte");
 				e.printStackTrace();
 			}
+			break;
+		case 3:
+			System.out.println("Jeu quitté");
+			System.exit(0);
 			break;
 		default:
 			break;

@@ -15,25 +15,36 @@ public class Solo extends Partie implements Serializable {
 	@Override
 	public void jouer() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("");
-		this.j1.getGrilleTir().afficher();
-		System.out.println("");
-		System.out.println("1-- Tirer \n2-- Trier \n3-- Sauvegarder \n4-- Quitter");
-		int choix = sc.nextInt();
+		int choix = 0;
+		while (choix != 1 && choix != 2 && choix != 3 && choix != 4) {
+			System.out.println("");
+			System.out.println("1-- Tirer \n2-- Trier \n3-- Sauvegarder \n4-- Quitter");
+			try {
+				choix = Integer.parseInt(sc.next());
+			} catch (Exception e) {
+				System.out.println("Entrez un nombre !");
+			}
+		}
 		switch (choix) {
 		case 1:
-			System.out.println("Entrez la position x y du tir");
-			System.out.println("");
-			int x = sc.nextInt();
-			int y = sc.nextInt();
-			try {
-				this.j1.getGrilleBateau().tirer(x, y);
-				this.j1.getGrilleTir().getPlateau()[x][y].setLibre(false);
+			boolean erreur = true;
+			while (erreur) {
+				try {
+					this.j1.getGrilleTir().afficher();
+					System.out.println("Entrez la position x y du tir");
+					System.out.println("");
+					int x = Integer.parseInt(sc.next());
+					int y = Integer.parseInt(sc.next());
+					this.j1.getGrilleBateau().tirer(x, y);
+					this.j1.getGrilleTir().getPlateau()[x][y].setLibre(false);
+					erreur = false;
 
-			} catch (GrilleException e) {
-				System.out.println("Tir incorrect, recommencez");
-				this.jouer();
-			}	
+				} catch (GrilleException e) {
+					System.out.println("Tir incorrect, recommencez");
+				} catch (Exception e) {
+					System.out.println("Entrez un nombre !");
+				}
+			}
 			break;
 		case 2:
 			System.out.println("");
@@ -53,7 +64,12 @@ public class Solo extends Partie implements Serializable {
 		case 3:
 			this.sauve("batailleNavale.jeu");
 			break;
+		case 4:
+			System.out.println("Jeu quitté");
+			System.exit(0);
+			break;
 		default:
+			System.out.println("Commande non reconnue");
 			break;
 		}
 
