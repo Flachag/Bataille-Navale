@@ -1,9 +1,12 @@
+package Jeu;
 import java.io.Serializable;
 
 public class Cases implements Serializable{
 	private int x, y;
 	private Bateau b;
 	private boolean libre = true;
+	private boolean bateauTouche = false;
+	private boolean ile = false;
 	
 	/*
 	 * Constructeur de Cases
@@ -48,4 +51,20 @@ public class Cases implements Serializable{
 	public void setLibre(boolean libre) {
 		this.libre = libre;
 	}	
+	
+	public boolean getBateauTouche() {
+		return this.bateauTouche;
+	}
+	
+	public void setBateauTouche(boolean bateau) {
+		this.bateauTouche = bateau;
+	}
+	
+	public void setIle(boolean ile) {
+		this.ile = ile;
+	}
+	
+	public boolean getIle() {
+		return this.ile;
+	}
 }

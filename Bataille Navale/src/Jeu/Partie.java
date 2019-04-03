@@ -1,23 +1,26 @@
+package Jeu;
+
 import java.io.*;
+import java.util.Scanner;
 
-
-public abstract class Partie implements Serializable{
+public abstract class Partie implements Serializable {
 	protected Joueur j1;
+
 	public Partie(Joueur j) {
 		this.j1 = j;
 	}
-	
+
 	public abstract void commencer();
-	
+
 	public abstract void jouer();
-	
+
 	public Joueur getJ1() {
 		return this.j1;
 	}
-	
-	public void sauve(String nom) {
+
+	public void sauver(String nom) {
 		try {
-			ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream(nom));
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nom));
 			oos.writeObject(this);
 			oos.close();
 		} catch (IOException e) {

@@ -1,3 +1,4 @@
+package Jeu;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -43,15 +44,27 @@ public class Bateau implements Serializable{
 		orientation = orientation.toLowerCase();
 		// permet de donner les cases ou est le bateau en fonction de son orientation
 		switch (orientation) {
-		case "verticale":
+		case "droite":
+			for (int i = 1; i < this.taille; i++) {
+				x++;
+				pos.add(this.setCase(x, y));
+			}
+			break;
+		case "gauche":
+			for (int i = 1; i < this.taille; i++) {
+				x--;
+				pos.add(this.setCase(x, y));
+			}
+			break;
+		case "bas":
 			for (int i = 1; i < this.taille; i++) {
 				y++;
 				pos.add(this.setCase(x, y));
 			}
 			break;
-		case "horizontale":
+		case "haut":
 			for (int i = 1; i < this.taille; i++) {
-				x++;
+				y--;
 				pos.add(this.setCase(x, y));
 			}
 			break;
@@ -74,6 +87,7 @@ public class Bateau implements Serializable{
 		Cases caseBateau = new Cases(x, y);
 		caseBateau.setBateau(this);
 		caseBateau.setLibre(false);
+		caseBateau.setBateauTouche(true);
 		return caseBateau;
 	}
 

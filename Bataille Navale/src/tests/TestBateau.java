@@ -1,3 +1,4 @@
+package tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +7,11 @@ import java.util.Comparator;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import Jeu.Bateau;
+import Jeu.BateauException;
+import Jeu.Grille;
+import Jeu.GrilleException;
 
 public class TestBateau {
 	Grille g;

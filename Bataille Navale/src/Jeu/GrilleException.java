@@ -1,3 +1,4 @@
+package Jeu;
 
 public class GrilleException extends Exception {
 	/*

@@ -1,3 +1,4 @@
+package Jeu;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,8 +71,12 @@ public class Grille implements Serializable{
 	/*
 	 * Place une case de "terre" sur la grille, on ne peut ni tirer dessus, ni placer un bateau dessus
 	 */
-	public void placerTerre(int x, int y) {
+	public void placerTerre(int x, int y) throws GrilleException {
+		if(x >= this.tailleX || y>= this.tailleY)
+			throw new GrilleException("Terre placee en dehors de la grille");
 		this.plateau[x][y].setLibre(false);
+		this.plateau[x][y].setIle(true);
+		
 	}
 
 	/**
@@ -141,6 +146,10 @@ public class Grille implements Serializable{
 			for (int j = 0; j < this.tailleX; j++) {
 				if (this.plateau[j][i].getBateau() != null)
 					System.out.print("B");
+				else if (this.plateau[j][i].getBateauTouche())
+					System.out.print("*");
+				else if (this.plateau[j][i].getIle())
+					System.out.print("O");
 				else if (!this.plateau[j][i].isLibre())
 					System.out.print("X");
 				else

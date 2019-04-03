@@ -1,8 +1,14 @@
+package tests;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import Jeu.BateauException;
+import Jeu.Grille;
+import Jeu.GrilleException;
+import Jeu.Joueur;
 
 public class TestJoueur {
 

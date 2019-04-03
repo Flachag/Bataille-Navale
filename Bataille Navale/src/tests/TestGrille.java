@@ -1,8 +1,14 @@
+package tests;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import Jeu.Bateau;
+import Jeu.BateauException;
+import Jeu.Grille;
+import Jeu.GrilleException;
 
 public class TestGrille {
 
@@ -14,10 +20,10 @@ public class TestGrille {
 		g = new Grille(10, 10);
 		g2= new Grille(6,10);
 		g3 = new Grille(10, 6);
-		b1 = new Bateau(0, 0, "porte avion", "verticale");
-		b2 = new Bateau(7, 0, "porte avion", "horizontale");
-		b3 = new Bateau(1, 0, "torpilleur", "verticale");
-		b4 = new Bateau(2, 0, "croiseur", "verticale");
+		b1 = new Bateau(0, 0, "porte avion", "bas");
+		b2 = new Bateau(7, 0, "porte avion", "droite");
+		b3 = new Bateau(1, 0, "torpilleur", "bas");
+		b4 = new Bateau(2, 0, "croiseur", "droite");
 	}
 
 	public void testIsPlacable() throws BateauException {
@@ -53,7 +59,7 @@ public class TestGrille {
 	}
 
 	@Test
-	public void testPlacerTerre(){
+	public void testPlacerTerre() throws GrilleException{
 		boolean res = g.getPlateau()[0][0].isLibre();
 		assertEquals("Case libre normalement", true, res);
 		g.placerTerre(0, 0);
@@ -152,10 +158,9 @@ public class TestGrille {
 		assertEquals("Mauvais Tri", "croiseur porte avion torpilleur", res);
 	}
 
-	public void testAfficher() {
-		g.afficher();
-		g2.afficher();
-		g3.afficher();
-		assertEquals("Mauvais Tri",true, true);
+	@Test
+	public void testIsBateau() throws BateauException {
+		g.placerBateau(b1);
+		assertEquals("Devrait etre true", true, g.getPlateau()[0][0].getBateauTouche());
 	}
 }

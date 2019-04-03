@@ -1,3 +1,5 @@
+package Jeu;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,18 +20,27 @@ public class Main {
 			System.out.println("1-- Jouer \n2-- Charger une partie\n3-- Quitter");
 			try {
 				choix = Integer.parseInt(sc.next());
+				if (choix != 1 && choix != 2 && choix != 3)
+					System.out.println("Commande inconnue");
 			} catch (Exception e) {
-				System.out.println("Entrez un chiffre !");
+				System.out.println("Entrez un chiffre !\n");
 			}
 		}
 
 		switch (choix) {
 		case 2:
 			try {
-				charge("batailleNavale.jeu");
+				if (charger("batailleNavale.jeu") instanceof Duo) {
+					Duo partie = (Duo) charger("batailleNavale.jeu");
+					partie.jouer();
+				} else if (charger("batailleNavale.jeu") instanceof Solo) {
+					Solo partie = (Solo) charger("batailleNavale.jeu");
+					partie.jouer();
+				}
 			} catch (Exception e) {
 				System.out.println("Aucune partie trouvée, début d'une nouvelle partie");
 			}
+			break;
 		case 1:
 			while (tailleX < 5 || tailleY < 5 || tailleX > 10 || tailleY > 10) {
 				System.out.println("Entrez la largeur et la hauteur de la grille (comprise entre 5 et 10):");
@@ -53,7 +64,7 @@ public class Main {
 					try {
 						nb = Integer.parseInt(sc.next());
 					} catch (Exception e) {
-						System.out.println("Entrez un chiffre");
+						System.out.println("Entrez un chiffre !\n");
 					}
 					switch (nb) {
 					case 1:
@@ -106,11 +117,12 @@ public class Main {
 		}
 	}
 
-	public static void charge(String nom) {
+	public static Partie charger(String source) {
+		Partie partie = null;
 		try {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nom));
-			Partie p = (Partie) (ois.readObject());
-			ois.close();
+			ObjectInputStream di = new ObjectInputStream(new FileInputStream(source));
+			partie = (Partie) (di.readObject());
+			di.close();
 		} catch (IOException e) {
 			System.out.println("erreur d’E/S");
 			e.printStackTrace();
@@ -118,5 +130,6 @@ public class Main {
 			System.out.println("erreur hors E/S");
 			e.printStackTrace();
 		}
+		return partie;
 	}
 }

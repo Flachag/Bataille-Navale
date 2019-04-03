@@ -1,3 +1,4 @@
+package Jeu;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -21,8 +22,7 @@ public class Joueur implements Serializable {
 		for (int i = 0; i < bateaux.length; i++) {
 			try {
 				System.out.println("");
-				System.out
-						.println("Entrez la position x y et l'orientation (verticale ou horizontale) du " + bateaux[i]);
+				System.out.println("Entrez la position x y et l'orientation (gauche, droite, haut, bas) du " + bateaux[i]);
 				x = Integer.parseInt(sc.next());
 				y = Integer.parseInt(sc.next());
 				ori = sc.next();
