@@ -3,6 +3,11 @@ package Jeu;
 import java.io.*;
 import java.util.Scanner;
 
+/**
+ * @author Chagras Flavien
+ *
+ */
+
 public abstract class Partie implements Serializable {
 	protected Joueur j1;
 

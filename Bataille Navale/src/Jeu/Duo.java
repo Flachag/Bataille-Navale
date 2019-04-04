@@ -5,6 +5,11 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Scanner;
 
+/**
+ * @author Chagras Flavien
+ *
+ */
+
 public class Duo extends Partie implements Serializable {
 
 	protected Joueur j2;

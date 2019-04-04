@@ -5,6 +5,11 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Scanner;
 
+/**
+ * @author Chagras Flavien
+ *
+ */
+
 public class Solo extends Partie implements Serializable {
 
 	public Solo(Joueur j1) throws GrilleException {

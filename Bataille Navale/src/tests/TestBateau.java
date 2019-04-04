@@ -20,8 +20,8 @@ public class TestBateau {
 	@Before
 	public void avant() throws BateauException, GrilleException {
 		g = new Grille(10, 10);
-		b = new Bateau(0, 0, "porte avion", "verticale");
-		b2 = new Bateau(1, 0, "torpilleur", "verticale");
+		b = new Bateau(0, 0, "porte avion", "bas");
+		b2 = new Bateau(1, 0, "torpilleur", "bas");
 	}
 
 	@Test
@@ -36,12 +36,12 @@ public class TestBateau {
 	@Test
 	public void testIsDead() throws BateauException, GrilleException {
 		g.placerBateau(b);
+		assertEquals("Le bateau devrait etre en vie", false, b.isDead());
 		g.tirer(0, 0);
 		g.tirer(0, 1);
 		g.tirer(0, 2);
 		g.tirer(0, 3);
 		g.tirer(0, 4);
-
 		assertEquals("Le bateau est censé être détruit", true, b.isDead());
 	}
 }

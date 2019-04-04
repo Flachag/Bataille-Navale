@@ -1,8 +1,14 @@
 package Jeu;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Bateau implements Serializable{
+/**
+ * @author Chagras Flavien
+ *
+ */
+
+public class Bateau implements Serializable {
 	private ArrayList<Cases> pos;
 	private String nom;
 	private int vie = 100;
@@ -72,7 +78,7 @@ public class Bateau implements Serializable{
 			throw new BateauException("Mauvaise orientation");
 		}
 
-		if (x < 0 || y < 0) 
+		if (x < 0 || y < 0)
 			throw new BateauException(this.nom + " mal placé");
 	}
 
@@ -120,24 +126,48 @@ public class Bateau implements Serializable{
 		return res;
 	}
 
+	/**
+	 * Getter de position
+	 * 
+	 * @return la position du bateau
+	 */
 	public ArrayList<Cases> getPos() {
 		return pos;
 	}
 
+	/**
+	 * setter de position
+	 * 
+	 * @param pos position du bateau
+	 */
 	public void setPos(ArrayList<Cases> pos) {
 		this.pos = pos;
 	}
 
+	/**
+	 * getter du nom du bateau
+	 * 
+	 * @return le nom du bateau
+	 */
 	public String getNom() {
 		return nom;
 	}
 
-	public int getVie() {
-		return this.vie;
-	}
-
+	/**
+	 * setter du nom du bateau
+	 * 
+	 * @param nom nom du bateau
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
+	/**
+	 * getter la vie du bateau
+	 * 
+	 * @return la vie du bateau
+	 */
+	public int getVie() {
+		return this.vie;
+	}
 }

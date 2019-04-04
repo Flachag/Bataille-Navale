@@ -13,44 +13,44 @@ import Jeu.GrilleException;
 public class TestGrille {
 
 	Grille g, g2, g3;
-	Bateau b1, b2, b3, b4;
+	Bateau porteAvion, porteAvionMalPlace, torpilleur, croiseur;
 
 	@Before
 	public void avant() throws BateauException, GrilleException {
 		g = new Grille(10, 10);
 		g2= new Grille(6,10);
 		g3 = new Grille(10, 6);
-		b1 = new Bateau(0, 0, "porte avion", "bas");
-		b2 = new Bateau(7, 0, "porte avion", "droite");
-		b3 = new Bateau(1, 0, "torpilleur", "bas");
-		b4 = new Bateau(2, 0, "croiseur", "droite");
+		porteAvion = new Bateau(0, 0, "porte avion", "bas");
+		porteAvionMalPlace = new Bateau(7, 0, "porte avion", "droite");
+		torpilleur = new Bateau(1, 0, "torpilleur", "bas");
+		croiseur = new Bateau(2, 0, "croiseur", "droite");
 	}
 
 	public void testIsPlacable() throws BateauException {
-		boolean res = g.isPlacable(b1);
+		boolean res = g.isPlacable(porteAvion);
 		assertEquals("Devrait pouvroir être placé", true, res);
-		res = g.isPlacable(b2);
+		res = g.isPlacable(porteAvionMalPlace);
 		assertEquals("Ne devrait pas pouvoir être placé", false, res);
 
 	}
 
 	@Test
 	public void testPlacerBateau() throws BateauException {
-		g.placerBateau(b1);
-		boolean res = g.getPlateau()[0][0].getBateau() == b1;
+		g.placerBateau(porteAvion);
+		boolean res = g.getPlateau()[0][0].getBateau() == porteAvion;
 		assertEquals("Bateau mal placé", true, res);
-		res = g.getPlateau()[0][1].getBateau() == b1;
+		res = g.getPlateau()[0][1].getBateau() == porteAvion;
 		assertEquals("Bateau mal placé", true, res);
-		res = g.getPlateau()[0][2].getBateau() == b1;
+		res = g.getPlateau()[0][2].getBateau() == porteAvion;
 		assertEquals("Bateau mal placé", true, res);
-		res = g.getPlateau()[0][3].getBateau() == b1;
+		res = g.getPlateau()[0][3].getBateau() == porteAvion;
 		assertEquals("Bateau mal placé", true, res);
-		res = g.getPlateau()[0][4].getBateau() == b1;
+		res = g.getPlateau()[0][4].getBateau() == porteAvion;
 		assertEquals("Bateau mal placé", true, res);
 
 		res = false;
 		try {
-			g.placerBateau(b2);
+			g.placerBateau(porteAvionMalPlace);
 		} catch (BateauException e) {
 			res = true;
 		}
@@ -69,7 +69,7 @@ public class TestGrille {
 
 	@Test
 	public void testTirNormal() throws BateauException, GrilleException {
-		g.placerBateau(b1);
+		g.placerBateau(porteAvion);
 		boolean res = g.tirer(1, 1);
 		assertEquals("Ne devrait pas toucher", false, res);
 		res = g.getPlateau()[1][1].isLibre();
@@ -115,8 +115,8 @@ public class TestGrille {
 
 	@Test
 	public void testFloteDetruite() throws BateauException, GrilleException {
-		g.placerBateau(b1);
-		g.placerBateau(b3);
+		g.placerBateau(porteAvion);
+		g.placerBateau(torpilleur);
 		g.tirer(0, 0);
 		g.tirer(0, 1);
 		g.tirer(0, 2);
@@ -129,8 +129,8 @@ public class TestGrille {
 
 	@Test
 	public void testTriVie() throws BateauException, GrilleException {
-		g.placerBateau(b4);
-		g.placerBateau(b1);
+		g.placerBateau(croiseur);
+		g.placerBateau(porteAvion);
 
 		g.tirer(0, 0);
 		g.trierVie();
@@ -146,13 +146,13 @@ public class TestGrille {
 
 	@Test
 	public void testTriNom() throws BateauException {
-		g.placerBateau(b3);
-		g.placerBateau(b4);
+		g.placerBateau(torpilleur);
+		g.placerBateau(croiseur);
 		g.trierNom();
 		String res = g.getFlote().get(0).getNom() + " " + g.getFlote().get(1).getNom();
 		assertEquals("Mauvais Tri", "croiseur torpilleur", res);
 
-		g.placerBateau(b1);
+		g.placerBateau(porteAvion);
 		g.trierNom();
 		res = g.getFlote().get(0).getNom() + " " + g.getFlote().get(1).getNom() + " " + g.getFlote().get(2).getNom();
 		assertEquals("Mauvais Tri", "croiseur porte avion torpilleur", res);
@@ -160,7 +160,7 @@ public class TestGrille {
 
 	@Test
 	public void testIsBateau() throws BateauException {
-		g.placerBateau(b1);
+		g.placerBateau(porteAvion);
 		assertEquals("Devrait etre true", true, g.getPlateau()[0][0].getBateauTouche());
 	}
 }

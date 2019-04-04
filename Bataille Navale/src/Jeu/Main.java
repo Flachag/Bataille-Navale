@@ -8,8 +8,12 @@ import java.io.ObjectOutputStream;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main {
+/**
+ * @author Chagras Flavien
+ *
+ */
 
+public class Main {
 	public static void main(String[] args) {
 		Grille bateauJ1, tirJ1;
 		Grille bateauJ2, tirJ2;
@@ -19,11 +23,12 @@ public class Main {
 		while (choix != 1 && choix != 2 && choix != 3) {
 			System.out.println("1-- Jouer \n2-- Charger une partie\n3-- Quitter");
 			try {
+				sc = new Scanner(System.in);
 				choix = Integer.parseInt(sc.next());
 				if (choix != 1 && choix != 2 && choix != 3)
-					System.out.println("Commande inconnue");
+					System.out.println("Choisissez 1, 2 ou 3");
 			} catch (Exception e) {
-				System.out.println("Entrez un chiffre !\n");
+				System.out.println("Entrez un nombre !");
 			}
 		}
 
@@ -38,13 +43,13 @@ public class Main {
 					partie.jouer();
 				}
 			} catch (Exception e) {
-				System.out.println("Aucune partie trouvée, début d'une nouvelle partie");
+				System.out.println("Aucune partie trouvée, début d'une nouvelle partie\n");
 			}
-			break;
 		case 1:
 			while (tailleX < 5 || tailleY < 5 || tailleX > 10 || tailleY > 10) {
 				System.out.println("Entrez la largeur et la hauteur de la grille (comprise entre 5 et 10):");
 				try {
+					sc = new Scanner(System.in);
 					tailleX = Integer.parseInt(sc.next());
 					tailleY = Integer.parseInt(sc.next());
 					if (tailleX < 5 || tailleY < 5 || tailleX > 10 || tailleY > 10)
@@ -62,12 +67,14 @@ public class Main {
 					System.out.println("Entrez le nombre de joueurs (1 ou 2):");
 					int nb = 0;
 					try {
+						sc = new Scanner(System.in);
 						nb = Integer.parseInt(sc.next());
 					} catch (Exception e) {
 						System.out.println("Entrez un chiffre !\n");
 					}
 					switch (nb) {
 					case 1:
+						sc = new Scanner(System.in);
 						joueur = true;
 						System.out.println("Entrez le nom du joueur:");
 						Joueur j = new Joueur(sc.next(), bateauJ1, tirJ1);
@@ -80,6 +87,7 @@ public class Main {
 						break;
 
 					case 2:
+						sc = new Scanner(System.in);
 						joueur = true;
 						bateauJ2 = new Grille(tailleX, tailleY);
 						tirJ2 = new Grille(tailleX, tailleY);
@@ -117,19 +125,11 @@ public class Main {
 		}
 	}
 
-	public static Partie charger(String source) {
+	public static Partie charger(String source) throws IOException, ClassNotFoundException {
 		Partie partie = null;
-		try {
-			ObjectInputStream di = new ObjectInputStream(new FileInputStream(source));
-			partie = (Partie) (di.readObject());
-			di.close();
-		} catch (IOException e) {
-			System.out.println("erreur d’E/S");
-			e.printStackTrace();
-		} catch (Exception e) {
-			System.out.println("erreur hors E/S");
-			e.printStackTrace();
-		}
+		ObjectInputStream di = new ObjectInputStream(new FileInputStream(source));
+		partie = (Partie) (di.readObject());
+		di.close();
 		return partie;
 	}
 }

@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * @author Chagras Flavien
+ *
+ */
+
 public class Grille implements Serializable{
 	private Cases[][] plateau;
 	private ArrayList<Bateau> flote;
