@@ -16,7 +16,6 @@ public class Duo extends Partie implements Serializable {
 
 	/**
 	 * Constructeur de duo (partie 2 joueurs)
-	 * 
 	 * @param j1 Joueur 1
 	 * @param j2 Joueur 2
 	 * @throws GrilleException Exceptions liees a la class Grille
@@ -59,6 +58,7 @@ public class Duo extends Partie implements Serializable {
 		this.j2.demanderBateau(this.j2.getGrilleBateau());
 	}
 
+	
 	@Override
 	public void jouer() {
 		this.deroulerTour(this.j1, this.j2);
@@ -66,11 +66,9 @@ public class Duo extends Partie implements Serializable {
 			this.deroulerTour(this.j2, this.j1);
 	}
 
-	/*
-	 * methode interne qui fait tirer un joueur sur un autre
-	 * 
-	 * @param tireur joueur qui tir
-	 * 
+	/**
+	 * Methode qui effectue le tour d'un joueur
+	 * @param tireur joueur qui joue
 	 * @param cible joueur cible
 	 */
 	private void deroulerTour(Joueur tireur, Joueur cible) {
@@ -99,6 +97,8 @@ public class Duo extends Partie implements Serializable {
 				// map ou tir sur case indisponible)
 
 				boolean tir = cible.getGrilleBateau().tirer(x, y);
+				if(tir)
+					tireur.getGrilleTir().getPlateau()[x][y].setBateauTouche(true);
 				tireur.getGrilleTir().getPlateau()[x][y].setLibre(false);
 				if (tir && !cible.getGrilleBateau().floteDetruite() && !tireur.getGrilleBateau().floteDetruite())
 					deroulerTour(tireur, cible);
@@ -112,28 +112,32 @@ public class Duo extends Partie implements Serializable {
 		case 2:
 			int trier = 0;
 			while (trier != 1 && trier != 2 && trier != 3) {
-				System.out.println(tireur.getNom()+":");
-				System.out.println("1-- Trier par nom \n2-- Trier par vie \n3-- Retour");
+				System.out.println("\n"+tireur.getNom()+":");
+				System.out.println("1-- Trier par taille \n2-- Trier par vie \n3-- Retour");
 				try {
 					trier = Integer.parseInt(sc.next());
 				} catch (Exception e) {
 					System.out.println("Entrez un nombre !");
 				}
 			}
-			System.out.println("Bateaux de "+tireur.getNom());
+			System.out.println("Bateaux de "+tireur.getNom()+":");
 			switch (trier) {
 			case 1:
-				tireur.getGrilleBateau().trierNom();
+				tireur.getGrilleBateau().trierTaille();
+				System.out.println("\nBateaux de "+cible.getNom());
+				cible.getGrilleBateau().trierTaille();
 				break;
 			case 2:
 				tireur.getGrilleBateau().trierVie();
+				System.out.println("\nBateaux de "+cible.getNom());
+				cible.getGrilleBateau().trierVie();
 				break;
 			default:
 				break;
 			}
 			break;
 		case 3:
-			this.sauver("batailleNavale.jeu");
+			this.sauver("batailleNavale.save");
 			break;
 		case 4:
 			System.out.println("Jeu quitté");

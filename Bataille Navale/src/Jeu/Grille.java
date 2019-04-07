@@ -36,11 +36,11 @@ public class Grille implements Serializable{
 		}
 	}
 
-	/*
-	 * Verifie si le bateau est placable sur la grille
+	/**
+	 * Methode qui verifie si le bateau est placable sur la grille
 	 * @param b bateau a verifier
-	 * @return true si le bateau peut etre place, false sinon
-	 * @throws BateauException Exception liee a la class Bateau
+	 * @return true si le bateau peut etre placé
+	 * @throws BateauException renvoie une erreur sinon
 	 */
 	public boolean isPlacable(Bateau b) throws BateauException {
 		boolean res = true;
@@ -53,14 +53,13 @@ public class Grille implements Serializable{
 				throw new BateauException("Bateau mal placé");
 			}
 		}
-
 		return res;
 	}
 
-	/*
-	 * place le bateau sur la grille
-	 * @param b Bateau a placer
-	 * @throws BateauException Exception liee a la class Bateau
+	/**
+	 * Methode qui place le bateau sur la grille
+	 * @param b bateau a placer
+	 * @throws BateauException renvoie une erreur si le bateau ne peut pas etre place 
 	 */
 	public void placerBateau(Bateau b) throws BateauException {
 		if (this.isPlacable(b)) {
@@ -165,9 +164,9 @@ public class Grille implements Serializable{
 		}
 	}
 
-	/*
-	 * Verifie si tous les bateaux de la grille sont ou non detruits
-	 * @return true si les bateaux sont detruits, false sinon
+	/**
+	 * Methode qui verifie si la flote de la grille est detruite
+	 * @return retourne true si la flote est detruite, false sinon
 	 */
 	public boolean floteDetruite() {
 		boolean res = false;
@@ -188,26 +187,28 @@ public class Grille implements Serializable{
 				return result;
 			}
 		});
-		System.out.println("\nBateaux triés du plus endommagé au moins endommagé:");
+		System.out.println("Bateaux triés du plus endommagé au moins endommagé:");
 		for (int i = 0; i < this.getFlote().size(); i++)
 			System.out.println(this.getFlote().get(i).getNom());
+		System.out.println("");
 	}
 
 	/*
 	 * Trie les bateau par ordre alphabetique
 	 */
-	public void trierNom() {
+	public void trierTaille() {
 		Collections.sort(this.getFlote(), new Comparator<Bateau>() {
 			public int compare(Bateau b1, Bateau b2) {
-				String nom1 = b1.getNom();
-				String nom2 = b2.getNom();
-				int result = nom1.compareTo(nom2);
+				Integer taille1 = (Integer) b1.getTaille();
+				Integer taille2 = (Integer) b2.getTaille();
+				int result = taille1.compareTo(taille2);
 				return result;
 			}
 		});
-		System.out.println("\nBateaux triés par nom:");
+		System.out.println("Bateaux triés par taille:");
 		for (int i = 0; i < this.getFlote().size(); i++)
 			System.out.println(this.getFlote().get(i).getNom());
+		System.out.println("");
 	}
 	
 	public Cases[][] getPlateau() {
@@ -218,6 +219,13 @@ public class Grille implements Serializable{
 		this.plateau = plateau;
 	}
 
+	public int getTailleX() {
+		return this.tailleX;
+	}
+	
+	public int getTailleY() {
+		return this.tailleY;
+	}
 	public ArrayList<Bateau> getFlote() {
 		return flote;
 	}

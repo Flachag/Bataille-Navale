@@ -17,9 +17,9 @@ public class Bateau implements Serializable {
 	/**
 	 * Constructeur de Bateau
 	 * 
-	 * @param x           coordonnee en ordonnee de l'avant du bateau
-	 * @param y           coordonnee en abscisse de l'avant du bateau
-	 * @param nom         du bateau
+	 * @param x coordonnee en ordonnee de l'avant du bateau
+	 * @param y coordonnee en abscisse de l'avant du bateau
+	 * @param nom du bateau
 	 * @param orientation du bateau (verticale ou horizontale)
 	 * @throws BateauException Exception liees a la classe Bateau
 	 */
@@ -82,20 +82,6 @@ public class Bateau implements Serializable {
 			throw new BateauException(this.nom + " mal placé");
 	}
 
-	/**
-	 * Creer une case avec un bateau dessus
-	 * 
-	 * @param x coordonnee X de la case
-	 * @param y coordonnee Y de la case
-	 * @return retourne la case cree
-	 */
-	private Cases setCase(int x, int y) {
-		Cases caseBateau = new Cases(x, y);
-		caseBateau.setBateau(this);
-		caseBateau.setLibre(false);
-		caseBateau.setBateauTouche(true);
-		return caseBateau;
-	}
 
 	/**
 	 * Fait subir un tir au bateau aux coordonnees donnees
@@ -115,8 +101,21 @@ public class Bateau implements Serializable {
 	}
 
 	/**
-	 * Verifie si le bateau est ou non detruit
+	 * Creer une case avec un bateau dessus
 	 * 
+	 * @param x coordonnee X de la case
+	 * @param y coordonnee Y de la case
+	 * @return retourne la case cree
+	 */
+	private Cases setCase(int x, int y) {
+		Cases caseBateau = new Cases(x, y);
+		caseBateau.setBateau(this);
+		caseBateau.setLibre(false);
+		return caseBateau;
+	}
+	
+	/**
+	 * Verifie si le bateau est ou non detruit
 	 * @return true si le bateau est detruit, false sinon
 	 */
 	public boolean isDead() {
@@ -128,7 +127,6 @@ public class Bateau implements Serializable {
 
 	/**
 	 * Getter de position
-	 * 
 	 * @return la position du bateau
 	 */
 	public ArrayList<Cases> getPos() {
@@ -169,5 +167,13 @@ public class Bateau implements Serializable {
 	 */
 	public int getVie() {
 		return this.vie;
+	}
+	
+	/**
+	 * Getter de la taille du bateau
+	 * @return taille du bateau
+	 */
+	public int getTaille() {
+		return this.taille;
 	}
 }

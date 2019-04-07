@@ -146,21 +146,15 @@ public class TestGrille {
 
 	@Test
 	public void testTriNom() throws BateauException {
-		g.placerBateau(torpilleur);
 		g.placerBateau(croiseur);
-		g.trierNom();
+		g.placerBateau(torpilleur);
+		g.trierTaille();
 		String res = g.getFlote().get(0).getNom() + " " + g.getFlote().get(1).getNom();
-		assertEquals("Mauvais Tri", "croiseur torpilleur", res);
+		assertEquals("Mauvais Tri", "torpilleur croiseur", res);
 
 		g.placerBateau(porteAvion);
-		g.trierNom();
+		g.trierTaille();
 		res = g.getFlote().get(0).getNom() + " " + g.getFlote().get(1).getNom() + " " + g.getFlote().get(2).getNom();
-		assertEquals("Mauvais Tri", "croiseur porte avion torpilleur", res);
-	}
-
-	@Test
-	public void testIsBateau() throws BateauException {
-		g.placerBateau(porteAvion);
-		assertEquals("Devrait etre true", true, g.getPlateau()[0][0].getBateauTouche());
+		assertEquals("Mauvais Tri", "torpilleur croiseur porte avion", res);
 	}
 }

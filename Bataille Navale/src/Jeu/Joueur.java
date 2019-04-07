@@ -34,10 +34,10 @@ public class Joueur implements Serializable {
 	public void demanderBateau(Grille g) {
 		int x, y;
 		String ori;
-		Scanner sc = new Scanner(System.in);
 		String[] bateaux = { "porte avion", "croiseur", "contre torpilleur", "sous marin", "torpilleur" };
 		g.afficher();
 		for (int i = 0; i < bateaux.length; i++) {
+			Scanner sc = new Scanner(System.in);
 			try {
 				System.out.println("");
 				System.out.println("Entrez la position x y et l'orientation (gauche, droite, haut, bas) du " + bateaux[i]);

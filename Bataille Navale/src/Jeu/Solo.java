@@ -12,6 +12,11 @@ import java.util.Scanner;
 
 public class Solo extends Partie implements Serializable {
 
+	/**
+	 * Constructeur de la classe Solo
+	 * @param j1 Joueur 1 de solo
+	 * @throws GrilleException exception liées à la grille de J1
+	 */
 	public Solo(Joueur j1) throws GrilleException {
 		super(j1);
 	}
@@ -91,7 +96,7 @@ public class Solo extends Partie implements Serializable {
 			}
 			switch (trier) {
 			case 1:
-				this.j1.getGrilleBateau().trierNom();
+				this.j1.getGrilleBateau().trierTaille();
 				break;
 			case 2:
 				this.j1.getGrilleBateau().trierVie();
@@ -101,7 +106,7 @@ public class Solo extends Partie implements Serializable {
 			}
 			break;
 		case 3:
-			this.sauver("batailleNavale.jeu");
+			this.sauver("batailleNavale.save");
 			break;
 		case 4:
 			System.out.println("Jeu quitté");
