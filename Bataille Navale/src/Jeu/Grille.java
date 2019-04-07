@@ -137,7 +137,8 @@ public class Grille implements Serializable{
 	 * Affiche la grille dans la console (but purement visuel)
 	 * affiche B sur les cases ou il y a un bateau
 	 * affiche X sur les cases ou il y a eu un tir
-	 * affiche  sinon
+	 * affiche * sur les case ou il y a eu un tir sur un bateau
+	 * affiche ~ sinon
 	 */
 	public void afficher() {
 		System.out.print(" |");
